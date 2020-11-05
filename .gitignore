@@ -9,3 +9,4 @@ cmd/
 coverage.out
 configs.sh
 todo
+upload-*
