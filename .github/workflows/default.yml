@@ -31,6 +31,11 @@ jobs:
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
             dep ensure
         fi
+
+    - name: Get Tesseract
+      run: |
+        apt install tesseract-ocr
+        apt install libtesseract-dev
     
     - name: Docker Compose
       run: |
