@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mlabs-config
+data:
+  DATABASE_USER:            "postgres"
+  DATABASE_PASS:            "postgres"
+  DATABASE_URL:             "postgres"
+  DATABASE_PORT:            "5432"
+  DATABASE_SCHEMA:          "mlabs"

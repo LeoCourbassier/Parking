@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlabs
+spec:
+  selector:
+    matchLabels:
+      app: mlabs
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mlabs
+    spec:
+      containers:
+      - name: mlabs
+        image: ACCOUNT_ID.dkr.ecr.us-east-2.amazonaws.com/REPO_NAME:latest
+        imagePullPolicy: "Always"
+        command: [ "./br.com.mlabs" ]
