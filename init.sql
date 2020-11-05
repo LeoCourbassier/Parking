@@ -1,0 +1,2 @@
+CREATE DATABASE mlabs;
+CREATE DATABASE mlabs_test;
