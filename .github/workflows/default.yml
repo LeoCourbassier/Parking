@@ -3,10 +3,10 @@ name: Default
 on:
   push:
     branches-ignore:
-      - main
+      - production
   pull_request:
     branches-ignore:
-      - main
+      - production
 
 jobs:
 
