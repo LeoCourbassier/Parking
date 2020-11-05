@@ -34,8 +34,8 @@ jobs:
 
     - name: Get Tesseract
       run: |
-        apt install tesseract-ocr
-        apt install libtesseract-dev
+        sudo apt install tesseract-ocr
+        sudo apt install libtesseract-dev
     
     - name: Docker Compose
       run: |
