@@ -78,7 +78,7 @@ jobs:
       env:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
-        args: apply -f kubernetes/deployment.yaml
+        args: apply -R -f kubernetes/
 
     - name: Get ELB url
       id: elb-url
