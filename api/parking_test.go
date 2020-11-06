@@ -9,6 +9,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"br.com.mlabs/api"
 	"br.com.mlabs/models"
@@ -108,8 +109,13 @@ func TestHistoryNotValid(t *testing.T) {
 // Tests checkin
 
 func TestPayHappyPath(t *testing.T) {
-	id := 3
-	url := fmt.Sprintf("/parking/%d/pay", id)
+	parking := models.Parking{
+		Checkin: time.Now(),
+		Plate:   "TST-1111",
+	}
+	tx.Create(&parking)
+
+	url := fmt.Sprintf("/parking/%d/pay", parking.ID)
 
 	req, _ := http.NewRequest(http.MethodPut, url, nil)
 	req.Header.Set("Content-Type", "application/json")
