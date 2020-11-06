@@ -128,8 +128,19 @@ func TestPayHappyPath(t *testing.T) {
 }
 
 func TestPayAlreadyPaid(t *testing.T) {
-	id := 1
-	url := fmt.Sprintf("/parking/%d/pay", id)
+	parking := models.Parking{
+		Checkin: time.Now(),
+		Plate:   "TST-1111",
+	}
+	tx.Create(&parking)
+
+	payment := models.Payment{
+		Paid:      true,
+		ParkingID: parking.ID,
+	}
+	tx.Create(&payment)
+
+	url := fmt.Sprintf("/parking/%d/pay", parking.ID)
 
 	req, _ := http.NewRequest(http.MethodPut, url, nil)
 	req.Header.Set("Content-Type", "application/json")
@@ -172,8 +183,19 @@ func TestPayBadRequest(t *testing.T) {
 // Tests Checkout
 
 func TestCheckoutHappyPath(t *testing.T) {
-	id := 1
-	url := fmt.Sprintf("/parking/%d/out", id)
+	parking := models.Parking{
+		Checkin: time.Now(),
+		Plate:   "TST-1111",
+	}
+	tx.Create(&parking)
+
+	payment := models.Payment{
+		Paid:      true,
+		ParkingID: parking.ID,
+	}
+	tx.Create(&payment)
+
+	url := fmt.Sprintf("/parking/%d/out", parking.ID)
 
 	req, _ := http.NewRequest(http.MethodPut, url, nil)
 	req.Header.Set("Content-Type", "application/json")
@@ -186,8 +208,21 @@ func TestCheckoutHappyPath(t *testing.T) {
 }
 
 func TestCheckoutAlreadyDone(t *testing.T) {
-	id := 2
-	url := fmt.Sprintf("/parking/%d/out", id)
+	parking := models.Parking{
+		Checkin: time.Now(),
+		Plate:   "TST-1111",
+	}
+	tx.Create(&parking)
+
+	payment := models.Payment{
+		Paid:      true,
+		ParkingID: parking.ID,
+	}
+	tx.Create(&payment)
+
+	tx.Model(&models.Parking{}).Where("id = ?", parking.ID).Update("checkout", time.Now())
+
+	url := fmt.Sprintf("/parking/%d/out", parking.ID)
 
 	req, _ := http.NewRequest(http.MethodPut, url, nil)
 	req.Header.Set("Content-Type", "application/json")
@@ -200,8 +235,13 @@ func TestCheckoutAlreadyDone(t *testing.T) {
 }
 
 func TestCheckoutPayPending(t *testing.T) {
-	id := 5
-	url := fmt.Sprintf("/parking/%d/out", id)
+	parking := models.Parking{
+		Checkin: time.Now(),
+		Plate:   "TST-1111",
+	}
+	tx.Create(&parking)
+
+	url := fmt.Sprintf("/parking/%d/out", parking.ID)
 
 	req, _ := http.NewRequest(http.MethodPut, url, nil)
 	req.Header.Set("Content-Type", "application/json")
